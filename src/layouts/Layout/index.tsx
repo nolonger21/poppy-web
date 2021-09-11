@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
@@ -5,8 +6,8 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import type { ProSettings } from '@ant-design/pro-layout';
 import ProLayout, { SettingDrawer } from '@ant-design/pro-layout';
-import Home from 'src/pages/Home';
 import defaultProps from './_defaultProps';
+import { RouterView } from '../../router/context';
 
 export default function Layout() {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
@@ -73,9 +74,7 @@ export default function Layout() {
         )}
         {...settings}
       >
-        <Switch>
-          <Route path="/admin/sub-page1" component={Home} />
-        </Switch>
+        <RouterView />
       </ProLayout>
       <SettingDrawer
         pathname={pathname}

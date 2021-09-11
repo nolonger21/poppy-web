@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
-import Page from 'src/components/Page'
+import Page from 'src/components/Page';
 import { Link } from 'react-router-dom';
 import { Space } from 'antd';
 import { AlipayCircleOutlined, LockOutlined, TaobaoCircleOutlined, UserOutlined, WeiboCircleOutlined } from '@ant-design/icons';
