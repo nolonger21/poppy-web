@@ -11,6 +11,21 @@ function isPlainObject(obj) {
   return Object.prototype.toString.call(obj) === '[object Object]' && ((prototype = Object.getPrototypeOf(obj)), prototype === null || prototype === Object.getPrototypeOf({}));
 }
 
+// export const pageToRouteInfo = page => {
+//   const fullPath = page.url ? decodeURIComponent(page.url) : ''
+//   const querySplit = fullPath.split('?')
+//   const path = querySplit[0] || ''
+//   const queryStr = querySplit.length > 1 ? querySplit[querySplit.length - 1] : ''
+//   const query = URLToJson(queryStr)
+//   return {
+//     fullPath: page.url,
+//     path,
+//     queryStr: queryStr,
+//     query,
+//     ...page
+//   }
+// }
+
 export default class AsyncRoute extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -23,6 +38,7 @@ export default class AsyncRoute extends React.PureComponent {
   componentDidMount() {
     const { route, ...props } = this.props;
     const { beforeEnter } = route;
+
     if (typeof beforeEnter !== 'function') {
       this.afterEnter(true);
       return;
@@ -78,13 +94,18 @@ export default class AsyncRoute extends React.PureComponent {
         return;
       }
     }
-    this.setState({ Component: component, completed: true, error: null });
+    this.setState({ Component: component, completed: true, error: null }, this.renderCompelete);
   }
   asyncLoad(promise) {
     promise.then((target) => {
       const component = target.default || target;
-      this.setState({ Component: component, completed: true, error: null });
+      this.setState({ Component: component, completed: true, error: null }, this.renderCompelete)
     });
+  }
+  renderCompelete() {
+    if(typeof this.props.onRenderCompelete === 'function') {
+      this.props.onRenderCompelete()
+    }
   }
   getExtraProps() {
     const { loading, beforeEnter, ...props } = this.props;

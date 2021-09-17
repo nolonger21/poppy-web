@@ -25,19 +25,19 @@ export interface RouterInstance {
   afterEach(hook: NavigationAfterGuard): void;
 }
 
-type Dictionary<T> = { [key: string]: T };
+export type Dictionary<T> = { [key: string]: T };
 
 export interface Route {
-  path: string;
-  name?: string;
+  path: string | readonly string[];
+  // name?: string;
   hash: string;
   query: Dictionary<string>;
-  params: Dictionary<string>;
+  // params: Dictionary<string>;
   fullPath: string;
   meta?: any;
 }
 
-export type NavigationGuard = (to: Route, from: Route, next: () => void) => any;
+export type NavigationGuard = (to: Route, from: Route, next: (params: unknown) => void) => any;
 
 export type NavigationAfterGuard = (to: Route, from: Route) => any;
 
